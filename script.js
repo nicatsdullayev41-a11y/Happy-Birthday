@@ -13,7 +13,7 @@ window.onload = function () {
     y: canvas.height / 2
   };
 
-  // 🎊 частицы (движение мыши)
+  // частицы (движение мыши)
   window.addEventListener("mousemove", function (e) {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
@@ -23,7 +23,7 @@ window.onload = function () {
     }
   });
 
-  // 📱 частицы (телефон)
+  // частицы (телефон)
   window.addEventListener("touchmove", function (e) {
     mouse.x = e.touches[0].clientX;
     mouse.y = e.touches[0].clientY;
@@ -33,7 +33,7 @@ window.onload = function () {
     }
   });
 
-  // ✨ класс частицы
+  // класс частицы
   class Particle {
     constructor(x, y) {
       this.x = x;
@@ -58,7 +58,7 @@ window.onload = function () {
     }
   }
 
-  // 🎂 красивый торт
+  // красивый торт
   function drawCake() {
     let x = canvas.width / 2;
     let y = canvas.height / 2;
@@ -103,7 +103,7 @@ window.onload = function () {
     }
   }
 
-  // 🎉 текст
+  // текст
   function drawText() {
     ctx.fillStyle = "white";
     ctx.font = "40px Arial";
@@ -111,7 +111,7 @@ window.onload = function () {
     ctx.fillText("🎉 С ДНЁМ РОЖДЕНИЯ! 🎉", canvas.width / 2, 100);
   }
 
-  // 🎬 анимация
+  // анимация
   function animate() {
     ctx.fillStyle = "rgba(0,0,0,0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
