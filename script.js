@@ -10,11 +10,11 @@ window.onload = function () {
   let fireworks = [];
 
   let candlesOn = true;
-  let showCake = true; // 🎂 показывать ли торт
+  let showCake = true;
 
-  // 🎥 создаём видео элемент
+  // 🎥 видео
   const video = document.createElement("video");
-  video.src = "video.mp4.mp4"; // ⚠️ сюда вставишь своё видео
+  video.src = "video.mp4"; // 👈 ВАЖНО: файл должен так называться
   video.style.position = "absolute";
   video.style.top = "0";
   video.style.left = "0";
@@ -22,6 +22,11 @@ window.onload = function () {
   video.style.height = "100%";
   video.style.objectFit = "cover";
   video.style.display = "none";
+
+  video.muted = true;
+  video.autoplay = true;
+  video.loop = true;
+
   document.body.appendChild(video);
 
   // 🎊 частицы
@@ -36,7 +41,6 @@ window.onload = function () {
     createFirework(e.clientX, e.clientY);
   });
 
-  // ✨ частицы
   class Particle {
     constructor(x, y) {
       this.x = x;
@@ -61,7 +65,6 @@ window.onload = function () {
     }
   }
 
-  // 🎇 фейерверк частица
   class FireworkParticle {
     constructor(x, y) {
       this.x = x;
@@ -124,7 +127,6 @@ window.onload = function () {
     }
   }
 
-  // 🎉 текст
   function drawText() {
     ctx.fillStyle = "white";
     ctx.font = "40px Arial";
@@ -132,7 +134,6 @@ window.onload = function () {
     ctx.fillText("🎉 С ДНЁМ РОЖДЕНИЯ! 🎉", canvas.width / 2, 100);
   }
 
-  // 🔘 кнопки свечей
   function drawButtons() {
     let y = canvas.height / 2 + 120;
 
@@ -147,7 +148,6 @@ window.onload = function () {
     ctx.fillText("Зажечь", canvas.width / 2 + 90, y + 30);
   }
 
-  // 🎁 подарок
   function drawGift() {
     let x = canvas.width / 2;
     let y = canvas.height / 2 + 200;
@@ -160,7 +160,6 @@ window.onload = function () {
     ctx.fillRect(x - 40, y + 25, 80, 10);
   }
 
-  // 🖱️ клики
   canvas.addEventListener("click", function (e) {
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
@@ -180,13 +179,12 @@ window.onload = function () {
     if (x > canvas.width / 2 - 40 && x < canvas.width / 2 + 40 &&
         y > giftY && y < giftY + 60) {
 
-      showCake = false; // скрываем торт
+      showCake = false;
       video.style.display = "block";
       video.play();
     }
   });
 
-  // 🎬 анимация
   function animate() {
     ctx.fillStyle = "rgba(0,0,0,0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
