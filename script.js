@@ -24,8 +24,8 @@ window.onload = function () {
   video.style.display = "none";
 
   video.muted = true;
-  video.autoplay = true;
-  video.loop = true;
+  video.autoplay = false;
+  video.loop = false;
 
   document.body.appendChild(video);
 
