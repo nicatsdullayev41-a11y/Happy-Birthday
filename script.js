@@ -139,11 +139,11 @@ window.onload = function () {
     ctx.fillRect(x - 60, y - 60, 120, 40);
 
     for (let i = -40; i <= 40; i += 20) {
-      ctx.fillStyle = "yellow";
+      ctx.fillStyle = "red";
       ctx.fillRect(x + i, y - 90, 6, 25);
       if (candlesOn) {
         let flicker = Math.random() * 4;
-        ctx.fillStyle = "orange";
+        ctx.fillStyle = "yellow";
         ctx.beginPath();
         ctx.arc(x + i + 3, y - 95, 6 + flicker, 0, Math.PI * 2);
         ctx.fill();
