@@ -10,7 +10,7 @@ window.onload = function () {
   let candlesOn = true;
   let showCake = true;
 
-  // мини-видео превью снизу
+  // мини видео превью снизу
   const miniVideo = document.createElement("video");
   miniVideo.src = "video.mp4"; // ваш файл
   miniVideo.style.position = "absolute";
