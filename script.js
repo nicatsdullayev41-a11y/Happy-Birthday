@@ -12,9 +12,9 @@ window.onload = function () {
   let candlesOn = true;
   let showCake = true;
 
-  // 🎥 видео
+  // видео
   const video = document.createElement("video");
-  video.src = "video.mp4.mp4"; // 👈 ВАЖНО: файл должен так называться
+  video.src = "video.mp4.mp4";
   video.style.position = "absolute";
   video.style.top = "0";
   video.style.left = "0";
@@ -29,14 +29,14 @@ window.onload = function () {
 
   document.body.appendChild(video);
 
-  // 🎊 частицы
+  // частицы
   window.addEventListener("mousemove", function (e) {
     for (let i = 0; i < 5; i++) {
       particles.push(new Particle(e.clientX, e.clientY));
     }
   });
 
-  // 🎇 фейерверк
+  // фейерверк
   window.addEventListener("click", function (e) {
     createFirework(e.clientX, e.clientY);
   });
@@ -98,7 +98,7 @@ window.onload = function () {
     }
   }
 
-  // 🎂 торт
+  // торт
   function drawCake() {
     let x = canvas.width / 2;
     let y = canvas.height / 2;
@@ -174,7 +174,7 @@ window.onload = function () {
     if (x > canvas.width / 2 + 30 && x < canvas.width / 2 + 150 &&
         y > btnY && y < btnY + 50) candlesOn = true;
 
-    // 🎁 подарок
+    // подарок
     let giftY = canvas.height / 2 + 200;
     if (x > canvas.width / 2 - 40 && x < canvas.width / 2 + 40 &&
         y > giftY && y < giftY + 60) {
