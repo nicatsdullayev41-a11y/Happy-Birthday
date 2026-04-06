@@ -10,9 +10,9 @@ window.onload = function () {
   let candlesOn = true;
   let showCake = true;
 
-  // мини видео превью
+  // 🎥 Мини-видео снизу (WhatsApp-style)
   const miniVideo = document.createElement("video");
-  miniVideo.src = "video.mp4.mp4";
+  miniVideo.src = "video.mp4"; // ваш файл рядом с index.html
   miniVideo.style.position = "absolute";
   miniVideo.style.bottom = "20px";
   miniVideo.style.left = "50%";
@@ -20,12 +20,12 @@ window.onload = function () {
   miniVideo.style.width = "200px";
   miniVideo.style.height = "120px";
   miniVideo.style.cursor = "pointer";
-  miniVideo.muted = true;
+  miniVideo.muted = true; // превью без звука
   miniVideo.autoplay = true;
   miniVideo.loop = true;
   document.body.appendChild(miniVideo);
 
-  // полноэкранное видео
+  // 🎬 Полноэкранное видео
   const fullVideo = document.createElement("video");
   fullVideo.src = "video.mp4";
   fullVideo.style.position = "absolute";
@@ -38,15 +38,14 @@ window.onload = function () {
   fullVideo.controls = true;
   document.body.appendChild(fullVideo);
 
-  // кнопка возврата после видео
+  // 🔘 Кнопка "Закрыть" для видео
   const returnBtn = document.createElement("button");
-  returnBtn.innerText = "Вернуться обратно";
+  returnBtn.innerText = "Закрыть";
   returnBtn.style.position = "absolute";
-  returnBtn.style.top = "50%";
-  returnBtn.style.left = "50%";
-  returnBtn.style.transform = "translate(-50%, -50%)";
-  returnBtn.style.padding = "20px 40px";
-  returnBtn.style.fontSize = "24px";
+  returnBtn.style.top = "20px";
+  returnBtn.style.right = "20px";
+  returnBtn.style.padding = "10px 20px";
+  returnBtn.style.fontSize = "18px";
   returnBtn.style.display = "none";
   document.body.appendChild(returnBtn);
 
@@ -62,14 +61,14 @@ window.onload = function () {
     returnBtn.style.display = "block";
   });
 
-  // частицы
+  // 🎊 Частицы
   window.addEventListener("mousemove", function (e) {
     for (let i = 0; i < 5; i++) {
       particles.push(new Particle(e.clientX, e.clientY));
     }
   });
 
-  // фейерверк
+  // 💥 Фейерверки
   window.addEventListener("click", function (e) {
     createFirework(e.clientX, e.clientY);
   });
@@ -81,7 +80,7 @@ window.onload = function () {
       this.size = Math.random() * 5 + 2;
       this.speedX = Math.random() * 4 - 2;
       this.speedY = Math.random() * 4 - 2;
-      this.color = "hsl(" + Math.random() * 360 + ",100%,60%)";
+      this.color = `hsl(${Math.random() * 360},100%,60%)`;
     }
     update() {
       this.x += this.speedX;
@@ -104,7 +103,7 @@ window.onload = function () {
       this.speedX = Math.random() * 6 - 3;
       this.speedY = Math.random() * 6 - 3;
       this.life = 100;
-      this.color = "hsl(" + Math.random() * 360 + ",100%,50%)";
+      this.color = `hsl(${Math.random() * 360},100%,50%)`;
     }
     update() {
       this.x += this.speedX;
@@ -127,6 +126,7 @@ window.onload = function () {
     }
   }
 
+  // 🎂 Торт с свечами
   function drawCake() {
     let x = canvas.width / 2;
     let y = canvas.height / 2;
@@ -170,12 +170,12 @@ window.onload = function () {
     ctx.fillText("Зажечь", canvas.width / 2 + 90, y + 30);
   }
 
-  // клик на мини-видео
+  // 🖱️ Клик на мини-видео
   miniVideo.addEventListener("click", () => {
     showCake = false;
     miniVideo.style.display = "none";
     fullVideo.style.display = "block";
-    fullVideo.muted = false;
+    fullVideo.muted = false; // звук включен
     fullVideo.volume = 1;
     fullVideo.play();
   });
@@ -184,15 +184,16 @@ window.onload = function () {
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
-
     let btnY = canvas.height / 2 + 120;
+
+    // кнопки Задуть/Зажечь
     if (x > canvas.width / 2 - 150 && x < canvas.width / 2 - 30 &&
         y > btnY && y < btnY + 50) candlesOn = false;
-
     if (x > canvas.width / 2 + 30 && x < canvas.width / 2 + 150 &&
         y > btnY && y < btnY + 50) candlesOn = true;
   });
 
+  // 🔄 Анимация
   function animate() {
     ctx.fillStyle = "rgba(0,0,0,0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -203,23 +204,17 @@ window.onload = function () {
       drawButtons();
     }
 
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].draw();
-      if (particles[i].size < 0.5) {
-        particles.splice(i, 1);
-        i--;
-      }
-    }
+    particles.forEach((p, i) => {
+      p.update();
+      p.draw();
+      if (p.size < 0.5) particles.splice(i, 1);
+    });
 
-    for (let i = 0; i < fireworks.length; i++) {
-      fireworks[i].update();
-      fireworks[i].draw();
-      if (fireworks[i].life <= 0) {
-        fireworks.splice(i, 1);
-        i--;
-      }
-    }
+    fireworks.forEach((f, i) => {
+      f.update();
+      f.draw();
+      if (f.life <= 0) fireworks.splice(i, 1);
+    });
 
     requestAnimationFrame(animate);
   }
