@@ -181,7 +181,13 @@ window.onload = function () {
 
       showCake = false;
       video.style.display = "block";
-      video.play();
+
+      let playPromise = video.play()
+      if (playPromise !==undefined) {
+        playPromise.catch(error => {
+          console.log("Автоплей заблокирован, ждем клика пользователя");
+        });
+      }
     }
   });
 
