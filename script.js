@@ -14,7 +14,7 @@ window.onload = function () {
 
   // 🎥 видео
   const video = document.createElement("video");
-  video.src = "video.mp4.mp4"; // 👈 ВАЖНО: файл должен так называться
+  video.src = "video.mp4"; // 👈 ВАЖНО: файл должен так называться
   video.style.position = "absolute";
   video.style.top = "0";
   video.style.left = "0";
