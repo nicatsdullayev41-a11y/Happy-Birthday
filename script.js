@@ -23,9 +23,10 @@ window.onload = function () {
   video.style.objectFit = "cover";
   video.style.display = "none";
 
-  video.muted = false;
-  video.autoplay = false;
-  video.loop = false;
+  // убрали muted, чтобы был звук
+  // video.muted = true;
+  video.autoplay = false; // autoplay со звуком не работает в браузерах
+  video.loop = true;
 
   document.body.appendChild(video);
 
@@ -182,10 +183,11 @@ window.onload = function () {
       showCake = false;
       video.style.display = "block";
 
-      let playPromise = video.play()
-      if (playPromise !==undefined) {
+      // проигрываем видео со звуком после клика
+      let playPromise = video.play();
+      if (playPromise !== undefined) {
         playPromise.catch(error => {
-          console.log("Автоплей заблокирован, ждем клика пользователя");
+          console.log("Автоплей со звуком заблокирован, нужно кликнуть вручную");
         });
       }
     }
