@@ -12,7 +12,7 @@ window.onload = function () {
 
   // мини видео превью снизу
   const miniVideo = document.createElement("video");
-  miniVideo.src = "video.mp4.mp4"; // ваш файл
+  miniVideo.src = "video.mp4.mp4";
   miniVideo.style.position = "absolute";
   miniVideo.style.bottom = "20px";
   miniVideo.style.left = "50%";
