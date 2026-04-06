@@ -14,7 +14,7 @@ window.onload = function () {
 
   // 🎥 создаём видео элемент
   const video = document.createElement("video");
-  video.src = "Трогательное видео поздравление с днем рождения женщине - Slide-Life.ru - "; // ⚠️ сюда вставишь своё видео
+  video.src = "video.mp4.mp4"; // ⚠️ сюда вставишь своё видео
   video.style.position = "absolute";
   video.style.top = "0";
   video.style.left = "0";
