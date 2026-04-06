@@ -9,42 +9,34 @@ window.onload = function () {
   let particles = [];
   let fireworks = [];
 
-  let mouse = {
-    x: canvas.width / 2,
-    y: canvas.height / 2
-  };
+  let candlesOn = true;
+  let showCake = true; // 🎂 показывать ли торт
 
-  // частицы от движения
+  // 🎥 создаём видео элемент
+  const video = document.createElement("video");
+  video.src = "video.mp4"; // ⚠️ сюда вставишь своё видео
+  video.style.position = "absolute";
+  video.style.top = "0";
+  video.style.left = "0";
+  video.style.width = "100%";
+  video.style.height = "100%";
+  video.style.objectFit = "cover";
+  video.style.display = "none";
+  document.body.appendChild(video);
+
+  // 🎊 частицы
   window.addEventListener("mousemove", function (e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-
-    for (let i = 0; i < 6; i++) {
-      particles.push(new Particle(mouse.x, mouse.y));
+    for (let i = 0; i < 5; i++) {
+      particles.push(new Particle(e.clientX, e.clientY));
     }
   });
 
-  window.addEventListener("touchmove", function (e) {
-    mouse.x = e.touches[0].clientX;
-    mouse.y = e.touches[0].clientY;
-
-    for (let i = 0; i < 6; i++) {
-      particles.push(new Particle(mouse.x, mouse.y));
-    }
-  });
-
-  // клик = фейерверк
+  // 🎇 фейерверк
   window.addEventListener("click", function (e) {
     createFirework(e.clientX, e.clientY);
   });
 
-  window.addEventListener("touchstart", function (e) {
-    let x = e.touches[0].clientX;
-    let y = e.touches[0].clientY;
-    createFirework(x, y);
-  });
-
-  // частицы
+  // ✨ частицы
   class Particle {
     constructor(x, y) {
       this.x = x;
@@ -69,7 +61,7 @@ window.onload = function () {
     }
   }
 
-  // фейерверк частица
+  // 🎇 фейерверк частица
   class FireworkParticle {
     constructor(x, y) {
       this.x = x;
@@ -98,17 +90,16 @@ window.onload = function () {
   }
 
   function createFirework(x, y) {
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 50; i++) {
       fireworks.push(new FireworkParticle(x, y));
     }
   }
 
-  // торт + МЕРЦАЮЩИЕ свечи
+  // 🎂 торт
   function drawCake() {
     let x = canvas.width / 2;
     let y = canvas.height / 2;
 
-    // слои
     ctx.fillStyle = "#ffb6c1";
     ctx.fillRect(x - 120, y + 20, 240, 60);
 
@@ -118,35 +109,22 @@ window.onload = function () {
     ctx.fillStyle = "#ff1493";
     ctx.fillRect(x - 60, y - 60, 120, 40);
 
-    // крем
-    ctx.fillStyle = "white";
-    for (let i = -110; i <= 110; i += 20) {
-      ctx.beginPath();
-      ctx.arc(x + i, y + 20, 10, 0, Math.PI, true);
-      ctx.fill();
-    }
-
-    // свечи с МЕРЦАНИЕМ
     for (let i = -40; i <= 40; i += 20) {
       ctx.fillStyle = "yellow";
       ctx.fillRect(x + i, y - 90, 6, 25);
 
-      // мерцающий огонь
-      let flicker = Math.random() * 4;
+      if (candlesOn) {
+        let flicker = Math.random() * 4;
 
-      ctx.fillStyle = "orange";
-      ctx.beginPath();
-      ctx.arc(x + i + 3, y - 95, 6 + flicker, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = "yellow";
-      ctx.beginPath();
-      ctx.arc(x + i + 3, y - 95, 3 + flicker / 2, 0, Math.PI * 2);
-      ctx.fill();
+        ctx.fillStyle = "orange";
+        ctx.beginPath();
+        ctx.arc(x + i + 3, y - 95, 6 + flicker, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
   }
 
-  // текст
+  // 🎉 текст
   function drawText() {
     ctx.fillStyle = "white";
     ctx.font = "40px Arial";
@@ -154,30 +132,84 @@ window.onload = function () {
     ctx.fillText("🎉 С ДНЁМ РОЖДЕНИЯ! 🎉", canvas.width / 2, 100);
   }
 
-  // анимация
+  // 🔘 кнопки свечей
+  function drawButtons() {
+    let y = canvas.height / 2 + 120;
+
+    ctx.fillStyle = "#444";
+    ctx.fillRect(canvas.width / 2 - 150, y, 120, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText("Задуть", canvas.width / 2 - 90, y + 30);
+
+    ctx.fillStyle = "#444";
+    ctx.fillRect(canvas.width / 2 + 30, y, 120, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText("Зажечь", canvas.width / 2 + 90, y + 30);
+  }
+
+  // 🎁 подарок
+  function drawGift() {
+    let x = canvas.width / 2;
+    let y = canvas.height / 2 + 200;
+
+    ctx.fillStyle = "red";
+    ctx.fillRect(x - 40, y, 80, 60);
+
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(x - 5, y, 10, 60);
+    ctx.fillRect(x - 40, y + 25, 80, 10);
+  }
+
+  // 🖱️ клики
+  canvas.addEventListener("click", function (e) {
+    let rect = canvas.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    let btnY = canvas.height / 2 + 120;
+
+    // кнопки
+    if (x > canvas.width / 2 - 150 && x < canvas.width / 2 - 30 &&
+        y > btnY && y < btnY + 50) candlesOn = false;
+
+    if (x > canvas.width / 2 + 30 && x < canvas.width / 2 + 150 &&
+        y > btnY && y < btnY + 50) candlesOn = true;
+
+    // 🎁 подарок
+    let giftY = canvas.height / 2 + 200;
+    if (x > canvas.width / 2 - 40 && x < canvas.width / 2 + 40 &&
+        y > giftY && y < giftY + 60) {
+
+      showCake = false; // скрываем торт
+      video.style.display = "block";
+      video.play();
+    }
+  });
+
+  // 🎬 анимация
   function animate() {
     ctx.fillStyle = "rgba(0,0,0,0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawCake();
-    drawText();
+    if (showCake) {
+      drawCake();
+      drawText();
+      drawButtons();
+      drawGift();
+    }
 
-    // обычные частицы
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
-
       if (particles[i].size < 0.5) {
         particles.splice(i, 1);
         i--;
       }
     }
 
-    // фейерверки
     for (let i = 0; i < fireworks.length; i++) {
       fireworks[i].update();
       fireworks[i].draw();
-
       if (fireworks[i].life <= 0) {
         fireworks.splice(i, 1);
         i--;
