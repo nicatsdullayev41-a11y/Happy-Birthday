@@ -14,7 +14,7 @@ window.onload = function () {
 
   // 🎥 видео
   const video = document.createElement("video");
-  video.src = "video.mp4.mp4"; // 👈 ВАЖНО: файл должен так называться
+  video.src = "video.mp4"; // файл рядом с index.html
   video.style.position = "absolute";
   video.style.top = "0";
   video.style.left = "0";
@@ -25,9 +25,33 @@ window.onload = function () {
 
   video.muted = true;
   video.autoplay = true;
-  video.loop = true;
+  video.loop = false; // видео проигрывается один раз
 
   document.body.appendChild(video);
+
+  // 🔘 кнопка возврата
+  const returnBtn = document.createElement("button");
+  returnBtn.innerText = "Вернуться обратно";
+  returnBtn.style.position = "absolute";
+  returnBtn.style.top = "50%";
+  returnBtn.style.left = "50%";
+  returnBtn.style.transform = "translate(-50%, -50%)";
+  returnBtn.style.padding = "20px 40px";
+  returnBtn.style.fontSize = "24px";
+  returnBtn.style.display = "none";
+  document.body.appendChild(returnBtn);
+
+  returnBtn.addEventListener("click", () => {
+    video.pause();
+    video.style.display = "none";
+    returnBtn.style.display = "none";
+    showCake = true;
+  });
+
+  video.addEventListener("ended", () => {
+    // когда видео закончилось, показываем кнопку
+    returnBtn.style.display = "block";
+  });
 
   // 🎊 частицы
   window.addEventListener("mousemove", function (e) {
@@ -36,7 +60,6 @@ window.onload = function () {
     }
   });
 
-  // 🎇 фейерверк
   window.addEventListener("click", function (e) {
     createFirework(e.clientX, e.clientY);
   });
@@ -50,13 +73,11 @@ window.onload = function () {
       this.speedY = Math.random() * 4 - 2;
       this.color = "hsl(" + Math.random() * 360 + ",100%,60%)";
     }
-
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
       this.size *= 0.96;
     }
-
     draw() {
       ctx.fillStyle = this.color;
       ctx.beginPath();
@@ -75,13 +96,11 @@ window.onload = function () {
       this.life = 100;
       this.color = "hsl(" + Math.random() * 360 + ",100%,50%)";
     }
-
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
       this.life--;
     }
-
     draw() {
       ctx.globalAlpha = this.life / 100;
       ctx.fillStyle = this.color;
@@ -167,7 +186,7 @@ window.onload = function () {
 
     let btnY = canvas.height / 2 + 120;
 
-    // кнопки
+    // кнопки свечей
     if (x > canvas.width / 2 - 150 && x < canvas.width / 2 - 30 &&
         y > btnY && y < btnY + 50) candlesOn = false;
 
