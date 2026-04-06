@@ -23,7 +23,7 @@ window.onload = function () {
   video.style.objectFit = "cover";
   video.style.display = "none";
 
-  video.muted = true;
+  video.muted = false;
   video.autoplay = false;
   video.loop = false;
 
