@@ -18,8 +18,8 @@ window.onload = function () {
   video.style.position = "absolute";
   video.style.top = "0";
   video.style.left = "0";
-  video.style.width = "100%";
-  video.style.height = "100%";
+  video.style.width = "90%";
+  video.style.height = "90%";
   video.style.objectFit = "cover";
   video.style.display = "none";
 
