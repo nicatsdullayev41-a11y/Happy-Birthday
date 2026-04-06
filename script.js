@@ -1,5 +1,4 @@
 window.onload = function () {
-
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -8,7 +7,6 @@ window.onload = function () {
 
   let particles = [];
   let fireworks = [];
-
   let candlesOn = true;
   let showCake = true;
 
@@ -22,11 +20,9 @@ window.onload = function () {
   video.style.height = "100%";
   video.style.objectFit = "cover";
   video.style.display = "none";
-
   video.muted = true;
   video.autoplay = true;
-  video.loop = false; // видео проигрывается один раз
-
+  video.loop = false;
   document.body.appendChild(video);
 
   // 🔘 кнопка возврата
@@ -41,6 +37,7 @@ window.onload = function () {
   returnBtn.style.display = "none";
   document.body.appendChild(returnBtn);
 
+  // Возврат в игру
   returnBtn.addEventListener("click", () => {
     video.pause();
     video.style.display = "none";
@@ -49,15 +46,12 @@ window.onload = function () {
   });
 
   video.addEventListener("ended", () => {
-    // когда видео закончилось, показываем кнопку
-    returnBtn.style.display = "block";
+    returnBtn.style.display = "block"; // появляется по окончании
   });
 
   // 🎊 частицы
   window.addEventListener("mousemove", function (e) {
-    for (let i = 0; i < 5; i++) {
-      particles.push(new Particle(e.clientX, e.clientY));
-    }
+    for (let i = 0; i < 5; i++) particles.push(new Particle(e.clientX, e.clientY));
   });
 
   window.addEventListener("click", function (e) {
@@ -112,9 +106,7 @@ window.onload = function () {
   }
 
   function createFirework(x, y) {
-    for (let i = 0; i < 50; i++) {
-      fireworks.push(new FireworkParticle(x, y));
-    }
+    for (let i = 0; i < 50; i++) fireworks.push(new FireworkParticle(x, y));
   }
 
   // 🎂 торт
@@ -124,20 +116,16 @@ window.onload = function () {
 
     ctx.fillStyle = "#ffb6c1";
     ctx.fillRect(x - 120, y + 20, 240, 60);
-
     ctx.fillStyle = "#ff69b4";
     ctx.fillRect(x - 90, y - 20, 180, 50);
-
     ctx.fillStyle = "#ff1493";
     ctx.fillRect(x - 60, y - 60, 120, 40);
 
     for (let i = -40; i <= 40; i += 20) {
       ctx.fillStyle = "yellow";
       ctx.fillRect(x + i, y - 90, 6, 25);
-
       if (candlesOn) {
         let flicker = Math.random() * 4;
-
         ctx.fillStyle = "orange";
         ctx.beginPath();
         ctx.arc(x + i + 3, y - 95, 6 + flicker, 0, Math.PI * 2);
@@ -155,12 +143,10 @@ window.onload = function () {
 
   function drawButtons() {
     let y = canvas.height / 2 + 120;
-
     ctx.fillStyle = "#444";
     ctx.fillRect(canvas.width / 2 - 150, y, 120, 50);
     ctx.fillStyle = "white";
     ctx.fillText("Задуть", canvas.width / 2 - 90, y + 30);
-
     ctx.fillStyle = "#444";
     ctx.fillRect(canvas.width / 2 + 30, y, 120, 50);
     ctx.fillStyle = "white";
@@ -170,10 +156,8 @@ window.onload = function () {
   function drawGift() {
     let x = canvas.width / 2;
     let y = canvas.height / 2 + 200;
-
     ctx.fillStyle = "red";
     ctx.fillRect(x - 40, y, 80, 60);
-
     ctx.fillStyle = "yellow";
     ctx.fillRect(x - 5, y, 10, 60);
     ctx.fillRect(x - 40, y + 25, 80, 10);
@@ -189,7 +173,6 @@ window.onload = function () {
     // кнопки свечей
     if (x > canvas.width / 2 - 150 && x < canvas.width / 2 - 30 &&
         y > btnY && y < btnY + 50) candlesOn = false;
-
     if (x > canvas.width / 2 + 30 && x < canvas.width / 2 + 150 &&
         y > btnY && y < btnY + 50) candlesOn = true;
 
@@ -197,10 +180,15 @@ window.onload = function () {
     let giftY = canvas.height / 2 + 200;
     if (x > canvas.width / 2 - 40 && x < canvas.width / 2 + 40 &&
         y > giftY && y < giftY + 60) {
-
       showCake = false;
       video.style.display = "block";
-      video.play();
+
+      let playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          returnBtn.style.display = "block"; // если autoplay не сработал
+        });
+      }
     }
   });
 
